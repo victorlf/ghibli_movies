@@ -7,7 +7,8 @@ A Flutter App that show all the movies made by the Studio Ghibli, showing the de
 
 The first screen show a a horizonta scroll list, where each element is a movie from the studio. When you tap on the movie card, you will be redirected to a second screen where you can see all the details about that specific movie.
 
-![Imgur](https://i.imgur.com/Hduq2Ow.gif)
+![ghibli_movie_app](https://user-images.githubusercontent.com/23375346/151018890-c4bae441-a20d-4b6b-b636-e0bee517f9f1.gif)
+
 
 ## How to install
 
