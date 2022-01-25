@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-//class MovieEntity extends Equatable {
-class MovieEntity {
+class MovieEntity extends Equatable {
+//class MovieEntity {
   final String id;
   final String title;
   final String originalTitle;
@@ -41,69 +41,69 @@ class MovieEntity {
     required this.url,
   });
 
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        originalTitle,
+        originalTitleRomanised,
+        image,
+        movieBanner,
+        description,
+        director,
+        producer,
+        releaseDate,
+        runningTime,
+        rtScore,
+        people,
+        species,
+        locations,
+        vehicles,
+        url,
+      ];
+
   // @override
-  // List<Object?> get props => [
-  //       id,
-  //       title,
-  //       originalTitle,
-  //       originalTitleRomanised,
-  //       image,
-  //       movieBanner,
-  //       description,
-  //       director,
-  //       producer,
-  //       releaseDate,
-  //       runningTime,
-  //       rtScore,
-  //       people,
-  //       species,
-  //       locations,
-  //       vehicles,
-  //       url,
-  //     ];
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  //   return other is MovieEntity &&
+  //       other.id == id &&
+  //       other.title == title &&
+  //       other.originalTitle == originalTitle &&
+  //       other.originalTitleRomanised == originalTitleRomanised &&
+  //       other.image == image &&
+  //       other.movieBanner == movieBanner &&
+  //       other.description == description &&
+  //       other.director == director &&
+  //       other.producer == producer &&
+  //       other.releaseDate == releaseDate &&
+  //       other.runningTime == runningTime &&
+  //       other.rtScore == rtScore &&
+  //       listEquals(other.people, people) &&
+  //       listEquals(other.species, species) &&
+  //       listEquals(other.locations, locations) &&
+  //       listEquals(other.vehicles, vehicles) &&
+  //       other.url == url;
+  // }
 
-    return other is MovieEntity &&
-        other.id == id &&
-        other.title == title &&
-        other.originalTitle == originalTitle &&
-        other.originalTitleRomanised == originalTitleRomanised &&
-        other.image == image &&
-        other.movieBanner == movieBanner &&
-        other.description == description &&
-        other.director == director &&
-        other.producer == producer &&
-        other.releaseDate == releaseDate &&
-        other.runningTime == runningTime &&
-        other.rtScore == rtScore &&
-        listEquals(other.people, people) &&
-        listEquals(other.species, species) &&
-        listEquals(other.locations, locations) &&
-        listEquals(other.vehicles, vehicles) &&
-        other.url == url;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        title.hashCode ^
-        originalTitle.hashCode ^
-        originalTitleRomanised.hashCode ^
-        image.hashCode ^
-        movieBanner.hashCode ^
-        description.hashCode ^
-        director.hashCode ^
-        producer.hashCode ^
-        releaseDate.hashCode ^
-        runningTime.hashCode ^
-        rtScore.hashCode ^
-        people.hashCode ^
-        species.hashCode ^
-        locations.hashCode ^
-        vehicles.hashCode ^
-        url.hashCode;
-  }
+  // @override
+  // int get hashCode {
+  //   return id.hashCode ^
+  //       title.hashCode ^
+  //       originalTitle.hashCode ^
+  //       originalTitleRomanised.hashCode ^
+  //       image.hashCode ^
+  //       movieBanner.hashCode ^
+  //       description.hashCode ^
+  //       director.hashCode ^
+  //       producer.hashCode ^
+  //       releaseDate.hashCode ^
+  //       runningTime.hashCode ^
+  //       rtScore.hashCode ^
+  //       people.hashCode ^
+  //       species.hashCode ^
+  //       locations.hashCode ^
+  //       vehicles.hashCode ^
+  //       url.hashCode;
+  // }
 }
