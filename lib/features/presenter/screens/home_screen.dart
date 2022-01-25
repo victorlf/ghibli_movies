@@ -1,7 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:ghibli_movies/features/presenter/controllers/home_controller.dart/home_state.dart';
+import 'package:ghibli_movies/features/presenter/controllers/home_controller.dart/home_store.dart';
 import 'package:ghibli_movies/features/presenter/screens/description_screen.dart';
+import 'package:ghibli_movies/features/presenter/widgets/app_progress_indicator.dart';
+import 'package:provider/src/provider.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,78 +48,104 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      context.read<HomeStore>().getAllMovies();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(content[_focusedIndex]['background_image']!),
-              fit: BoxFit.cover,
-            ),
+    final homeStore = context.watch<HomeStore>();
+    final homeState = homeStore.value;
+    Widget? child;
+
+    if (homeState is LoadingHomeState) {
+      child = const AppProgressIndicator();
+    }
+
+    if (homeState is ErrorHomeState) {
+      child = Center(
+        child: Text(homeState.message),
+      );
+    }
+
+    if (homeState is SuccessHomeState) {
+      child = Container(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image:
+                NetworkImage(homeState.moviesList[_focusedIndex].movieBanner),
+            fit: BoxFit.cover,
           ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
-            child: Container(
-              color: Colors.white.withOpacity(0.3),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Center(
-                      child:
-                          Image.asset('assets/images/studio_ghibli_logo.png'),
-                    ),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+          child: Container(
+            color: Colors.white.withOpacity(0.3),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Center(
+                    child: Image.asset('assets/images/studio_ghibli_logo.png'),
                   ),
-                  const Spacer(),
-                  Expanded(
-                    child: ScrollSnapList(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemSize: 120.0,
-                      onItemFocus: _onItemFocus,
-                      //reverse: true,
-                      dynamicItemSize: true,
-                      itemBuilder: (context, index) {
-                        //final sh = MediaQuery.of(context).size.width;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: GestureDetector(
-                            child: Hero(
-                              tag: content[index]['card_image']!,
-                              child: Container(
-                                //height: 900.0,
-                                height: 200.0,
-                                //width: 600.0,
-                                width: 120.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        content[index]['card_image']!),
-                                    fit: BoxFit.fill,
-                                  ),
+                ),
+                const Spacer(),
+                Expanded(
+                  child: ScrollSnapList(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: homeState.moviesList.length,
+                    itemSize: 120.0,
+                    onItemFocus: _onItemFocus,
+                    //reverse: true,
+                    dynamicItemSize: true,
+                    itemBuilder: (context, index) {
+                      //final sh = MediaQuery.of(context).size.width;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: GestureDetector(
+                          child: Hero(
+                            tag: homeState.moviesList[index].image,
+                            child: Container(
+                              //height: 900.0,
+                              height: 200.0,
+                              //width: 600.0,
+                              width: 120.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      homeState.moviesList[index].image),
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DescriptionScreen(
-                                    movie: content[index]['card_image']!,
-                                  ),
-                                )),
                           ),
-                        );
-                      },
-                    ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DescriptionScreen(
+                                  movie: homeState.moviesList[index],
+                                ),
+                              )),
+                        ),
+                      );
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
+        ),
+      );
+    }
+
+    return SafeArea(
+      child: Scaffold(
+        body: child ?? const SizedBox(),
       ),
     );
   }

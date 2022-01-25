@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ghibli_movies/features/domain/entities/movie_entity.dart';
+import 'package:ghibli_movies/features/presenter/controllers/home_controller.dart/home_store.dart';
 import 'package:ghibli_movies/features/presenter/widgets/main_characteristic.dart';
 import 'package:ghibli_movies/features/presenter/widgets/movie_name.dart';
 import 'package:ghibli_movies/features/presenter/widgets/rating_score.dart';
 
 class DescriptionScreen extends StatelessWidget {
-  final String movie;
+  final MovieEntity movie;
   const DescriptionScreen({Key? key, required this.movie}) : super(key: key);
 
   @override
@@ -21,13 +23,13 @@ class DescriptionScreen extends StatelessWidget {
               child: SizedBox(
                 width: 200.0,
                 child: Column(
-                  children: const [
-                    MovieName(name: 'もののけ姫'),
-                    Divider(
+                  children: [
+                    MovieName(name: movie.originalTitle),
+                    const Divider(
                       color: Colors.white,
                       thickness: 1.0,
                     ),
-                    MovieName(name: 'Princess Mononoke'),
+                    MovieName(name: movie.title),
                   ],
                 ),
               ),
@@ -43,22 +45,22 @@ class DescriptionScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         MainCharacteristic(
                           title: 'Release',
-                          content: '1998',
+                          content: movie.releaseDate,
                         ),
                         MainCharacteristic(
                           title: 'Duration',
-                          content: '86 min',
+                          content: '${movie.runningTime} min',
                         ),
                         MainCharacteristic(
                           title: 'Director',
-                          content: 'Hayao Miyazaki',
+                          content: movie.director,
                         ),
                         MainCharacteristic(
                           title: 'Producer',
-                          content: 'Hayato Miyazaki',
+                          content: movie.producer,
                         ),
                       ],
                     ),
@@ -86,7 +88,7 @@ class DescriptionScreen extends StatelessWidget {
                               )
                             ],
                             image: DecorationImage(
-                              image: NetworkImage(movie),
+                              image: NetworkImage(movie.image),
                               fit: BoxFit.fill,
                             ),
                           ),

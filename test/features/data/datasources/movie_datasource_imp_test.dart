@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ghibli_movies/core/http_client.dart/http_client.dart';
 import 'package:ghibli_movies/core/usecase/errors/exceptions.dart';
+import 'package:ghibli_movies/features/data/datasources/endpoints.dart';
 import 'package:ghibli_movies/features/data/datasources/movie_datasource.dart';
 import 'package:ghibli_movies/features/data/datasources/movie_datasource_imp.dart';
 import 'package:ghibli_movies/features/data/models/movie_model.dart';
@@ -22,10 +23,8 @@ void main() {
     datasource = MovieDatasourceImp(client);
   });
 
-  const urlExpectedAllMovies = 'https://ghibliapi.herokuapp.com/films/';
-
-  const urlExpectedOneMovie =
-      'https://ghibliapi.herokuapp.com/films/58611129-2dbc-4a81-a72f-77ddfc1b1b49';
+  final urlExpectedOneMovie =
+      Endpoints.onMovie('58611129-2dbc-4a81-a72f-77ddfc1b1b49');
 
   void successGetAllMoviesMock() {
     when(() => client.get(any())).thenAnswer(
@@ -43,7 +42,7 @@ void main() {
     // Act
     await datasource.getAllMovies();
     // Assert
-    verify(() => client.get(urlExpectedAllMovies)).called(1);
+    verify(() => client.get(Endpoints.allMovies())).called(1);
   });
 
   test('Should return a list of MovieModel when us successful', () async {
