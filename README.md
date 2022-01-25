@@ -21,3 +21,4 @@ This project was built for practicing puporses only. Here are some of the concep
 - Clean Arquitecture and Clean Code concepts;
 - State Management with Value Notifier;
 - Dependencies Injection with [Provider package](https://pub.dev/packages/provider).
+- Unit tests with [Mocktail](https://pub.dev/packages/mocktail).
