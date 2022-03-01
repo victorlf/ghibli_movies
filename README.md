@@ -12,7 +12,7 @@ The first screen show a a horizonta scroll list, where each element is a movie f
 
 ## How to install
 
-This Project is ready to go, you only have to download this code base and build the APK. This project was only tested in Android, so if you tried to build a IPS, please be aware that the it will have the Material theme and it could have some build problems.
+This Project is ready to go, you only have to download this code base and build the APK. This project was only tested in Android, so if you tried to build an IPS, please be aware that the it will have the Material theme and it could have some building problems.
 
 ## Details about the project
 
